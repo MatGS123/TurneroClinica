@@ -131,13 +131,13 @@
                                     <table class="table table-calendar">
                                         <thead>
                                             <tr>
-                                                <th>Sun</th>
-                                                <th>Mon</th>
-                                                <th>Tue</th>
-                                                <th>Wed</th>
-                                                <th>Thu</th>
-                                                <th>Fri</th>
-                                                <th>Sat</th>
+                                                <th>Dom</th>
+                                                <th>Lun</th>
+                                                <th>Mar</th>
+                                                <th>Mié</th>
+                                                <th>Jue</th>
+                                                <th>Vie</th>
+                                                <th>Sáb</th>
                                             </tr>
                                         </thead>
                                         <tbody id="calendar-body">
@@ -727,13 +727,17 @@
                 const firstDay = new Date(year, month, 1);
                 const lastDay = new Date(year, month + 1, 0);
                 const daysInMonth = lastDay.getDate();
-                const startingDay = firstDay.getDay(); // 0 = Sunday
+                const startingDay = firstDay.getDay();
 
-                // Update month display
-                const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August",
-                    "September", "October", "November", "December"
-                ];
-                $("#current-month").text(`${monthNames[month]} ${year}`);
+                //  Array de meses en ESPAÑOL
+                const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
+                                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+                
+                // Actualizar display Y guardar mes/año como data attributes
+                $("#current-month")
+                    .text(`${monthNames[month]} ${year}`)
+                    .data('month', month)  // Guardar mes como número
+                    .data('year', year);   // Guardar año como número
 
                 // Clear calendar
                 $("#calendar-body").empty();
@@ -741,28 +745,21 @@
                 // Build calendar
                 let date = 1;
                 for (let i = 0; i < 6; i++) {
-                    // Create a table row
                     const row = $("<tr></tr>");
 
-                    // Create cells for each day of the week
                     for (let j = 0; j < 7; j++) {
                         if (i === 0 && j < startingDay) {
-                            // Empty cells before the first day of the month
                             row.append("<td></td>");
                         } else if (date > daysInMonth) {
-                            // Break if we've reached the end of the month
                             break;
                         } else {
-                            // Create a cell for this date
                             const today = new Date();
                             const cellDate = new Date(year, month, date);
                             const formattedDate =
                                 `${year}-${(month + 1).toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`;
 
-                            // Check if this date is in the past
                             const isPast = cellDate < new Date(today.setHours(0, 0, 0, 0));
 
-                            // Create the cell with appropriate classes
                             const cell = $(
                                 `<td class="text-center calendar-day${isPast ? ' disabled' : ''}" data-date="${formattedDate}">${date}</td>`
                             );
@@ -772,7 +769,6 @@
                         }
                     }
 
-                    // Add the row to the calendar if it has cells
                     if (row.children().length > 0) {
                         $("#calendar-body").append(row);
                     }
@@ -780,14 +776,9 @@
             }
 
             function navigateMonth(direction) {
-                const currentMonthText = $("#current-month").text();
-                const [monthName, year] = currentMonthText.split(" ");
-
-                const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August",
-                    "September", "October", "November", "December"
-                ];
-                let month = monthNames.indexOf(monthName);
-                let yearNum = parseInt(year);
+                // Leer desde data attributes en lugar de parsear el texto
+                let month = $("#current-month").data('month');
+                let yearNum = $("#current-month").data('year');
 
                 month += direction;
 
@@ -954,36 +945,36 @@
 
 
             function updateSummary() {
-                // Find the selected category
                 const selectedCategory = categories.find(cat => cat.id == bookingState.selectedCategory);
+                $("#summary-category").text(selectedCategory ? selectedCategory.title : 'No seleccionado');
 
-                // Update summary with booking details
-                $("#summary-category").text(selectedCategory ? selectedCategory.title : 'Not selected');
-
-                // Update service info - using the stored service object
                 if (bookingState.selectedService) {
                     $("#summary-service").text(
                         `${bookingState.selectedService.title} (${bookingState.selectedService.price})`);
-                    $("#summary-duration").text(`${bookingState.selectedEmployee.slot_duration} minutes`);
+                    $("#summary-duration").text(`${bookingState.selectedEmployee.slot_duration} minutos`);
                     $("#summary-price").text(bookingState.selectedService.price);
                 }
 
-                // Update employee info
                 if (bookingState.selectedEmployee) {
                     $("#summary-employee").text(bookingState.selectedEmployee.user.name);
                 }
 
-                // Update date/time info
                 if (bookingState.selectedDate && bookingState.selectedTime) {
-                    const formattedDate = new Date(bookingState.selectedDate).toLocaleDateString('en-US', {
-                        weekday: 'long',
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                    });
+                    // Formato de fecha en español
+                    const meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio", 
+                                "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+                    const dias = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+                    
+                    const fecha = new Date(bookingState.selectedDate);
+                    const diaSemana = dias[fecha.getDay()];
+                    const dia = fecha.getDate();
+                    const mes = meses[fecha.getMonth()];
+                    const año = fecha.getFullYear();
+                    
+                    const formattedDate = `${diaSemana}, ${dia} de ${mes} de ${año}`;
 
                     $("#summary-datetime").text(
-                        `${formattedDate} at ${bookingState.selectedTime.display || bookingState.selectedTime}`);
+                        `${formattedDate} a las ${bookingState.selectedTime.display || bookingState.selectedTime}`);
                 }
             }
 
