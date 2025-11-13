@@ -1,13 +1,12 @@
 @extends('adminlte::page')
 
-@section('title', 'All Appointments')
+@section('title', 'Todas las Citas')
 
 @section('content_header')
     <div class="row mb-2">
         <div class="col-sm-6">
             <h1>Todas las citas</h1>
         </div>
-
     </div>
 @stop
 
@@ -38,32 +37,30 @@
                         <p><strong>Notas:</strong> <span id="modalNotes">N/A</span></p>
                         <p><strong>Estado actual:</strong> <span id="modalStatusBadge">N/A</span></p>
 
-
-                        <div class="form-group ">
+                        <div class="form-group">
                             <label><strong>Estado:</strong></label>
                             <select name="status" class="form-control" id="modalStatusSelect">
                                 <option value="Pending payment">Pendiente de pago</option>
-                                <option value="Processing">Procesandose</option>
-                                <option value="Confirmed">Confirmadp</option>
+                                <option value="Processing">Procesando</option>
+                                <option value="Confirmed">Confirmado</option>
                                 <option value="Cancelled">Cancelado</option>
                                 <option value="Completed">Completado</option>
                                 <option value="On Hold">En espera</option>
-                                {{-- <option value="Rescheduled">Rescheduled</option> --}}
-                                <option value="No Show">Sin monstrar</option>
+                                <option value="No Show">No asistió</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="submit" onclick="return confirm('Confirmar actualización?')"
+                        <button type="submit" onclick="return confirm('¿Confirmar actualización?')"
                             class="btn btn-danger">Actualizar estado</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     </div>
-
                 </div>
             </div>
         </div>
     </form>
+    
     <div class="">
         @if (session('success'))
             <div class="alert alert-success alert-dismissable">
@@ -73,8 +70,6 @@
                 <strong>{{ session('success') }}</strong>
             </div>
         @endif
-        <!-- Content Header (Page header) -->
-        <!-- Content Header (Page header) -->
 
         <!-- Main content -->
         <section class="content">
@@ -82,45 +77,20 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card py-2 px-2">
-
                             <div class="card-body p-0">
-                                <table id="myTable" class="table table-striped projects ">
+                                <table id="myTable" class="table table-striped projects">
                                     <thead>
                                         <tr>
-                                            <th style="width: 1%">
-                                                #
-                                            </th>
-                                            <th style="width: 15%">
-                                                Usuario
-                                            </th>
-                                            <th style="width: 15%">
-                                                Email
-                                            </th>
-                                            <th style="width: 10%">
-                                                Teléfono
-                                            </th>
-                                            <th style="width: 10%">
-                                                Personal
-                                            </th>
-
-
-                                            <th style="width: 10%">
-                                                Servicio
-                                            </th>
-                                            <th style="width: 10%">
-                                                Fecha
-                                            </th>
-                                            <th style="width: 10%">
-                                                Tiempo
-                                            </th>
-
-
-                                            <th style="width: 15%" class="text-center">
-                                                Estado
-                                            </th>
-                                            <th style="width: 18%">
-                                                Acción
-                                            </th>
+                                            <th style="width: 1%">#</th>
+                                            <th style="width: 15%">Usuario</th>
+                                            <th style="width: 15%">Email</th>
+                                            <th style="width: 10%">Teléfono</th>
+                                            <th style="width: 10%">Personal</th>
+                                            <th style="width: 10%">Servicio</th>
+                                            <th style="width: 10%">Fecha</th>
+                                            <th style="width: 10%">Tiempo</th>
+                                            <th style="width: 15%" class="text-center">Estado</th>
+                                            <th style="width: 18%">Acción</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -135,48 +105,41 @@
                                                 'Rescheduled' => '#f1c40f',
                                                 'No Show' => '#e67e22',
                                             ];
+                                            
+                                            $statusTranslations = [
+                                                'Pending payment' => 'Pendiente de pago',
+                                                'Processing' => 'Procesando',
+                                                'Confirmed' => 'Confirmado',
+                                                'Cancelled' => 'Cancelado',
+                                                'Completed' => 'Completado',
+                                                'On Hold' => 'En espera',
+                                                'Rescheduled' => 'Reprogramado',
+                                                'No Show' => 'No asistió',
+                                            ];
                                         @endphp
                                         @foreach ($appointments as $appointment)
                                             <tr>
+                                                <td>{{ $loop->iteration }}</td>
                                                 <td>
-                                                    {{ $loop->iteration }}
-                                                </td>
-                                                <td>
-                                                    <a>
-                                                        {{ $appointment->name }}
-                                                    </a>
+                                                    <a>{{ $appointment->name }}</a>
                                                     <br>
-                                                    <small>
-                                                        {{ $appointment->created_at->format('d M Y') }}
-                                                    </small>
+                                                    <small>{{ $appointment->created_at->format('d M Y') }}</small>
                                                 </td>
-                                                <td>
-                                                    {{ $appointment->email }}
-                                                </td>
-                                                <td>
-                                                    {{ $appointment->phone }}
-                                                </td>
-                                                <td>
-                                                    {{ $appointment->employee->user->name }}
-                                                </td>
-
-                                                <td>
-                                                    {{ $appointment->service->title ?? 'NA' }}
-                                                </td>
-                                                <td>
-                                                    {{ $appointment->booking_date }}
-                                                </td>
-                                                <td>
-                                                    {{ $appointment->booking_time }}
-                                                </td>
+                                                <td>{{ $appointment->email }}</td>
+                                                <td>{{ $appointment->phone }}</td>
+                                                <td>{{ $appointment->employee->user->name }}</td>
+                                                <td>{{ $appointment->service->title ?? 'NA' }}</td>
+                                                <td>{{ $appointment->booking_date }}</td>
+                                                <td>{{ $appointment->booking_time }}</td>
                                                 <td>
                                                     @php
                                                         $status = $appointment->status;
                                                         $color = $statusColors[$status] ?? '#7f8c8d';
+                                                        $statusText = $statusTranslations[$status] ?? $status;
                                                     @endphp
                                                     <span class="badge px-2 py-1"
                                                         style="background-color: {{ $color }}; color: white;">
-                                                        {{ $status }}
+                                                        {{ $statusText }}
                                                     </span>
                                                 </td>
                                                 <td>
@@ -191,33 +154,26 @@
                                                         data-start="{{ $appointment->booking_date . ' ' . $appointment->booking_time }}"
                                                         data-amount="{{ $appointment->amount }}"
                                                         data-notes="{{ $appointment->notes }}"
-                                                        data-status="{{ $appointment->status }}">View</button>
+                                                        data-status="{{ $appointment->status }}">Ver</button>
                                                 </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
-
                             </div>
-                            <!-- /.card-body -->
                         </div>
                     </div>
-                    <!-- /.col -->
-
                 </div>
-                <!-- /.row -->
-            </div><!-- /.container-fluid -->
+            </div>
         </section>
     </div>
 @stop
 
 @section('css')
-
 @stop
 
 @section('js')
-
-    {{-- hide notifcation --}}
+    {{-- hide notification --}}
     <script>
         $(document).ready(function() {
             $(".alert").delay(6000).slideUp(300);
@@ -227,13 +183,27 @@
     <script>
         $(document).ready(function() {
             $('#myTable').DataTable({
-                responsive: true
+                responsive: true,
+                language: {
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "zeroRecords": "No se encontraron resultados",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "emptyTable": "No hay datos disponibles"
+                }
             });
-
         });
     </script>
-
-
 
     <script>
         $(document).on('click', '.view-appointment-btn', function() {
@@ -252,6 +222,18 @@
             var status = $(this).data('status');
             $('#modalStatusSelect').val(status);
 
+            // Traducciones de estado
+            var statusTranslations = {
+                'Pending payment': 'Pendiente de pago',
+                'Processing': 'Procesando',
+                'Confirmed': 'Confirmado',
+                'Cancelled': 'Cancelado',
+                'Completed': 'Completado',
+                'On Hold': 'En espera',
+                'Rescheduled': 'Reprogramado',
+                'No Show': 'No asistió'
+            };
+
             // Set status badge
             var statusColors = {
                 'Pending payment': '#f39c12',
@@ -265,8 +247,10 @@
             };
 
             var badgeColor = statusColors[status] || '#7f8c8d';
+            var statusText = statusTranslations[status] || status;
+            
             $('#modalStatusBadge').html(
-                `<span class="badge px-2 py-1" style="background-color: ${badgeColor}; color: white;">${status}</span>`
+                `<span class="badge px-2 py-1" style="background-color: ${badgeColor}; color: white;">${statusText}</span>`
             );
         });
     </script>
