@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Appointments</h1>
+    <h1>Turnos</h1>
     @if (session('success'))
         <div class="alert alert-success alert-dismissable mt-2">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -51,33 +51,33 @@
                     </div>
 
                     <div class="modal-body">
-                        <p><strong>Client:</strong> <span id="modalAppointmentName">N/A</span></p>
-                        <p><strong>Service:</strong> <span id="modalService">N/A</span></p>
+                        <p><strong>Cliente:</strong> <span id="modalAppointmentName">N/A</span></p>
+                        <p><strong>Servicio:</strong> <span id="modalService">N/A</span></p>
                         <p><strong>Email:</strong> <span id="modalEmail">N/A</span></p>
-                        <p><strong>Phone:</strong> <span id="modalPhone">N/A</span></p>
-                        <p><strong>Staff:</strong> <span id="modalStaff">N/A</span></p>
-                        <p><strong>Date & Time:</strong> <span id="modalStartTime">N/A</span></p>
+                        <p><strong>Teléfono:</strong> <span id="modalPhone">N/A</span></p>
+                        <p><strong>Personal:</strong> <span id="modalStaff">N/A</span></p>
+                        <p><strong>Fecha y hora:</strong> <span id="modalStartTime">N/A</span></p>
                         {{-- <p><strong>End:</strong> <span id="modalEndTime">N/A</span></p> --}}
-                        <p><strong>Amount:</strong> <span id="modalAmount">N/A</span></p>
-                        <p><strong>Notes:</strong> <span id="modalNotes">N/A</span></p>
-                        <p><strong>Current Status:</strong> <span id="modalStatusBadge">N/A</span></p>
+                        <p><strong>Cantidad:</strong> <span id="modalAmount">N/A</span></p>
+                        <p><strong>Notas:</strong> <span id="modalNotes">N/A</span></p>
+                        <p><strong>Estado actual:</strong> <span id="modalStatusBadge">N/A</span></p>
 
                         <div class="form-group">
-                            <label><strong>Change Status:</strong></label>
+                            <label><strong>Cambiar estado:</strong></label>
                             <select name="status" class="form-control" id="modalStatusSelect">
-                                <option value="Pending payment">Pending payment</option>
-                                <option value="Processing">Processing</option>
-                                <option value="Confirmed">Confirmed</option>
-                                <option value="Cancelled">Cancelled</option>
-                                <option value="Completed">Completed</option>
-                                <option value="On Hold">On Hold</option>
-                                <option value="No Show">No Show</option>
+                                <option value="Pending payment">Pendiente de pago</option>
+                                <option value="Processing">En proceso</option>
+                                <option value="Confirmed">Confirmado</option>
+                                <option value="Cancelled">Cancelado</option>
+                                <option value="Completed">Completado</option>
+                                <option value="On Hold">En espera</option>
+                                <option value="No Show">No mostrar</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-danger">Update Status</button>
+                        <button type="submit" class="btn btn-danger">Actualizar Status</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
