@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\ObraSocial;
 use App\Models\Category;
 use App\Models\Employee;
 use App\Models\Service;
@@ -33,7 +34,9 @@ class FrontendController extends Controller
 
         $employees = Employee::with('services')->with('user')->get();
 
-        return view('frontend.index', compact('categories','employees'));
+        $obrasSociales = ObraSocial::orderBy('nombre')->get();
+
+        return view('frontend.index', compact('categories','employees', 'obrasSociales'));
     }
 
 

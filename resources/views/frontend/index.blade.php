@@ -228,6 +228,17 @@
                                             <label for="customer-phone" class="form-label">Teléfono</label>
                                             <input type="tel" class="form-control" id="customer-phone" required>
                                         </div>
+
+                                       <div class="col-md-6">
+                                            <label for="customer-obra-social" class="form-label">Obra social</label>
+                                            <select class="form-control" id="customer-obra-social">
+                                                <option value="">-- Sin obra social --</option>
+                                                @foreach ($obrasSociales as $obra)
+                                                    <option value="{{ $obra->nombre }}">{{ $obra->nombre }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
                                         <div class="col-12">
                                             <label for="customer-notes" class="form-label">Datos relevantes (Opcional)</label>
                                             <textarea class="form-control" id="customer-notes" rows="3"></textarea>
@@ -994,6 +1005,7 @@
                     name: $('#customer-name').val(),
                     email: $('#customer-email').val(),
                     phone: $('#customer-phone').val(),
+                    obra_social: $('#customer-obra-social').val(),
                     notes: $('#customer-notes').val(),
                     amount: parseFloat(bookingState.selectedService.price.replace(/[^0-9.]/g, '')),
                     booking_date: bookingState.selectedDate,
@@ -1030,6 +1042,7 @@
 
                         const bookingDetails = `
                                 <div class="mb-2"><strong>Customer:</strong> ${$("#customer-name").val()}</div>
+                                <div class="mb-2"><strong>Obra social:</strong> ${$("#customer-obra-social").val() || 'N/A'}</div>
                                 <div class="mb-2"><strong>Service:</strong> ${bookingState.selectedService.title}</div>
                                 <div class="mb-2"><strong>Staff:</strong> ${bookingState.selectedEmployee.user.name}</div>
                                 <div class="mb-2"><strong>Date & Time:</strong> ${formattedDate} at ${bookingState.selectedTime.display || bookingState.selectedTime}</div>

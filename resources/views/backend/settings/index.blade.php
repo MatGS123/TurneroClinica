@@ -92,6 +92,7 @@
                                 {{-- <li class="nav-item"><a class="nav-link" href="#smtp" data-toggle="tab">SMTP</a>
                                 </li> --}}
                                 <li class="nav-item"><a class="nav-link" href="#seo" data-toggle="tab">SEO</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#obras-sociales" data-toggle="tab">Obras Sociales</a></li>
                                 {{-- <li class="nav-item"><a class="nav-link" href="#social-login" data-toggle="tab">Social
                                         login</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#security" data-toggle="tab">Advance</a>
@@ -419,8 +420,8 @@
                                     <div class="form-group row">
                                         <label for="inputName2" class="col-sm-2 col-form-label">Keywords</label>
                                         <div class="col-sm-10">
-
-                                            <textarea name="meta_keywords" id="" placeholder="Keyword1, keyword2, keyword3" class="form-control"
+                                            <textarea name="meta_keywords" class="form-control"
+                                                placeholder="Keyword1, keyword2, keyword3"
                                                 cols="30" rows="2">{{ $setting->meta_keywords }}</textarea>
                                             <small>SEO keywords</small>
                                         </div>
@@ -428,11 +429,45 @@
                                     <div class="form-group row">
                                         <label for="inputName2" class="col-sm-2 col-form-label">Descripción del sitio</label>
                                         <div class="col-sm-10">
-                                            <textarea name="meta_description" id="" placeholder="Website description..." class="form-control"
+                                            <textarea name="meta_description" class="form-control"
+                                                placeholder="Website description..."
                                                 cols="30" rows="3">{{ $setting->meta_description }}</textarea>
                                             <small>Descripción para SEO</small>
                                         </div>
                                     </div>
+                                </div>
+
+                                {{-- TAB: Obras Sociales --}}
+                                <div class="tab-pane" id="obras-sociales">
+                                    <h5 class="mb-3">Gestión de Obras Sociales</h5>
+
+                                    <div id="obras-alert" class="alert d-none"></div>
+
+                                    <div class="input-group mb-4" style="max-width: 450px;">
+                                        <input type="text" id="nueva-obra" class="form-control" placeholder="Nombre de la obra social">
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-primary" id="btn-agregar-obra">
+                                                <i class="fas fa-plus"></i> Agregar
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <table class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Nombre</th>
+                                                <th style="width: 160px;">Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="obras-tbody">
+                                            <tr>
+                                                <td colspan="3" class="text-center">
+                                                    <span class="spinner-border spinner-border-sm"></span> Cargando...
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
 
                                 {{-- social login --}}
@@ -589,5 +624,109 @@
             $(".alert").delay(6000).slideUp(300);
         });
     </script> --}}
+
+    <script>
+    $(document).ready(function () {
+        const csrfToken = '{{ csrf_token() }}';
+        const baseUrl = '/obras-sociales';
+
+        $('a[href="#obras-sociales"]').on('shown.bs.tab', function () {
+            cargarObras();
+        });
+
+        function cargarObras() {
+            $.get(baseUrl, function (data) {
+                const tbody = $('#obras-tbody');
+                tbody.empty();
+                if (data.length === 0) {
+                    tbody.append('<tr><td colspan="3" class="text-center text-muted">No hay obras sociales.</td></tr>');
+                    return;
+                }
+                data.forEach(function (obra, i) {
+                    tbody.append(`
+                        <tr id="fila-${obra.id}">
+                            <td>${i + 1}</td>
+                            <td>${obra.nombre}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning btn-editar"
+                                    data-id="${obra.id}" data-nombre="${obra.nombre}">
+                                    <i class="fas fa-edit"></i> Editar
+                                </button>
+                                <button class="btn btn-sm btn-danger btn-eliminar" data-id="${obra.id}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `);
+                });
+            });
+        }
+
+        function mostrarAlerta(mensaje, tipo = 'success') {
+            const a = $('#obras-alert');
+            a.removeClass('d-none alert-success alert-danger').addClass('alert-' + tipo).text(mensaje);
+            setTimeout(() => a.addClass('d-none'), 4000);
+        }
+
+        // Agregar
+        $('#btn-agregar-obra').on('click', function () {
+            const nombre = $('#nueva-obra').val().trim();
+            if (!nombre) return;
+            $.ajax({
+                url: baseUrl, method: 'POST',
+                data: { nombre, _token: csrfToken },
+                success: function (res) {
+                    $('#nueva-obra').val('');
+                    mostrarAlerta(res.message);
+                    cargarObras();
+                },
+                error: function (xhr) {
+                    mostrarAlerta(xhr.responseJSON?.errors?.nombre?.[0] || 'Error al agregar.', 'danger');
+                }
+            });
+        });
+
+        // Abrir modal editar
+        $(document).on('click', '.btn-editar', function () {
+            $('#edit-obra-id').val($(this).data('id'));
+            $('#edit-obra-nombre').val($(this).data('nombre'));
+            $('#modalEditarObra').modal('show');
+        });
+
+        // Guardar edición
+        $('#btn-guardar-edicion').on('click', function () {
+            const id = $('#edit-obra-id').val();
+            const nombre = $('#edit-obra-nombre').val().trim();
+            if (!nombre) return;
+            $.ajax({
+                url: `${baseUrl}/${id}`, method: 'PUT',
+                data: { nombre, _token: csrfToken },
+                success: function (res) {
+                    $('#modalEditarObra').modal('hide');
+                    mostrarAlerta(res.message);
+                    cargarObras();
+                },
+                error: function (xhr) {
+                    mostrarAlerta(xhr.responseJSON?.errors?.nombre?.[0] || 'Error al actualizar.', 'danger');
+                }
+            });
+        });
+
+        // Eliminar
+        $(document).on('click', '.btn-eliminar', function () {
+            if (!confirm('¿Eliminar esta obra social?')) return;
+            const id = $(this).data('id');
+            $.ajax({
+                url: `${baseUrl}/${id}`, method: 'DELETE',
+                data: { _token: csrfToken },
+                success: function (res) {
+                    $(`#fila-${id}`).remove();
+                    mostrarAlerta(res.message);
+                },
+                error: function () { mostrarAlerta('Error al eliminar.', 'danger'); }
+            });
+        });
+    });
+    </script>
 @stop
 

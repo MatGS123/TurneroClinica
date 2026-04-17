@@ -31,6 +31,7 @@
                         <p><strong>Servicio:</strong> <span id="modalService">N/A</span></p>
                         <p><strong>Email:</strong> <span id="modalEmail">N/A</span></p>
                         <p><strong>Teléfono:</strong> <span id="modalPhone">N/A</span></p>
+                        <p><strong>Obra social:</strong> <span id="modalObraSocial">N/A</span></p>
                         <p><strong>Personal:</strong> <span id="modalStaff">N/A</span></p>
                         <p><strong>Inicio:</strong> <span id="modalStartTime">N/A</span></p>
                         <p><strong>Monto:</strong> <span id="modalAmount">N/A</span></p>
@@ -83,6 +84,7 @@
                                         <tr>
                                             <th style="width: 1%">#</th>
                                             <th style="width: 15%">Usuario</th>
+                                            <th style="width: 10%">Obra</th>
                                             <th style="width: 15%">Email</th>
                                             <th style="width: 10%">Teléfono</th>
                                             <th style="width: 10%">Personal</th>
@@ -120,17 +122,36 @@
                                         @foreach ($appointments as $appointment)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
+
+                                                {{-- Usuario --}}
                                                 <td>
                                                     <a>{{ $appointment->name }}</a>
                                                     <br>
                                                     <small>{{ $appointment->created_at->format('d M Y') }}</small>
                                                 </td>
+
+                                                {{-- Obra Social --}}
+                                                <td>{{ $appointment->obra_social ?? 'N/A' }}</td>
+
+                                                {{-- Email --}}
                                                 <td>{{ $appointment->email }}</td>
+
+                                                {{-- Teléfono --}}
                                                 <td>{{ $appointment->phone }}</td>
+
+                                                {{-- Personal --}}
                                                 <td>{{ $appointment->employee->user->name }}</td>
-                                                <td>{{ $appointment->service->title ?? 'NA' }}</td>
+
+                                                {{-- Servicio --}}
+                                                <td>{{ $appointment->service->title ?? 'N/A' }}</td>
+
+                                                {{-- Fecha --}}
                                                 <td>{{ $appointment->booking_date }}</td>
+
+                                                {{-- Tiempo --}}
                                                 <td>{{ $appointment->booking_time }}</td>
+
+                                                {{-- Estado --}}
                                                 <td>
                                                     @php
                                                         $status = $appointment->status;
@@ -142,14 +163,17 @@
                                                         {{ $statusText }}
                                                     </span>
                                                 </td>
+
+                                                {{-- Acción --}}
                                                 <td>
                                                     <button class="btn btn-primary btn-sm py-0 px-1 view-appointment-btn"
                                                         data-toggle="modal" data-target="#appointmentModal"
                                                         data-id="{{ $appointment->id }}"
                                                         data-name="{{ $appointment->name }}"
-                                                        data-service="{{ $appointment->service->title ?? 'MA' }}"
+                                                        data-service="{{ $appointment->service->title ?? 'N/A' }}"
                                                         data-email="{{ $appointment->email }}"
                                                         data-phone="{{ $appointment->phone }}"
+                                                        data-obra_social="{{ $appointment->obra_social ?? 'N/A' }}"
                                                         data-employee="{{ $appointment->employee->user->name }}"
                                                         data-start="{{ $appointment->booking_date . ' ' . $appointment->booking_time }}"
                                                         data-amount="{{ $appointment->amount }}"
@@ -213,6 +237,7 @@
             $('#modalService').text($(this).data('service'));
             $('#modalEmail').text($(this).data('email'));
             $('#modalPhone').text($(this).data('phone'));
+            $('#modalObraSocial').text($(this).data('obra_social') || 'N/A');
             $('#modalStaff').text($(this).data('employee'));
             $('#modalStartTime').text($(this).data('start'));
             $('#modalAmount').text($(this).data('amount'));

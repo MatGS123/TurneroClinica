@@ -40,6 +40,7 @@ class AppointmentController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:20',
+            'obra_social' => 'nullable|string|max:255',
             'notes' => 'nullable|string',
             'amount' => 'required|numeric',
             'booking_date' => 'required|date',

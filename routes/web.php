@@ -24,6 +24,14 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+Route::prefix('obras-sociales')->name('obras-sociales.')->middleware(['auth'])->group(function () {
+    Route::get('/', [App\Http\Controllers\ObraSocialController::class, 'index'])->name('index');
+    Route::post('/', [App\Http\Controllers\ObraSocialController::class, 'store'])->name('store');
+    Route::put('/{obraSocial}', [App\Http\Controllers\ObraSocialController::class, 'update'])->name('update');
+    Route::delete('/{obraSocial}', [App\Http\Controllers\ObraSocialController::class, 'destroy'])->name('destroy');
+});
+
+
     //user
     Route::resource('user',UserController::class)->middleware('permission:users.view| users.create | users.edit | users.delete');
     //update user password
