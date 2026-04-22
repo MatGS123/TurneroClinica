@@ -9,17 +9,10 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-
-    public function up() {
-        Schema::table('appointments', function (Blueprint $table) {
-            $table->string('obra_social')->nullable();
-        });
-    }
-
     public function up(): void
     {
         Schema::table('appointments', function (Blueprint $table) {
-            //
+            $table->string('obra_social')->nullable();
         });
     }
 
@@ -29,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('appointments', function (Blueprint $table) {
-            //
+            $table->dropColumn('obra_social');
         });
     }
 };
