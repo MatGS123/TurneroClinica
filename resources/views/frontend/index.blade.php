@@ -595,7 +595,7 @@
 
                 // Make AJAX request to get services for this category
                 $.ajax({
-                    url: `/categories/${categoryId}/services`,
+                    url: "{{ url('categories') }}/" + categoryId + "/services",
                     type: 'GET',
                     dataType: 'json',
                     success: function(response) {
@@ -663,7 +663,7 @@
 
                 // Make AJAX request to get employees for this service
                 $.ajax({
-                    url: `/services/${serviceId}/employees`,
+                    url: "{{ url('services') }}/" + serviceId + "/employees",
                     type: 'GET',
                     dataType: 'json',
                     success: function(response) {
@@ -875,7 +875,7 @@
                 `);
 
                 $.ajax({
-                    url: `/employees/${employeeId}/availability/${apiDate}`,
+                    url: "{{ url('employees') }}/" + employeeId + "/availability/" + apiDate,
                     success: function(response) {
                         $("#time-slots-container").empty();
 
@@ -1027,7 +1027,7 @@
 
                 // Submit via AJAX
                 $.ajax({
-                    url: '/bookings',
+                    url: "{{ url('bookings') }}",
                     method: 'POST',
                     data: bookingData,
                     success: function(response) {
