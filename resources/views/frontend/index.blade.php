@@ -265,7 +265,7 @@
     <footer>
         <div class="container pb-2">
             <div class="row text-center">
-            <span>© 2026 Clínica PulmoLab. Todos los derechos reservados.</span>
+            <span><span>© {{ date('Y') }} Clínica PulmoLab. Todos los derechos reservados. Desarrollado por <a href="https://vfixtechnology.com" target="_blank" rel="noopener" style="color:#3490dc;font-weight:bold;">VFIX Technology</a>.</span></span>
             </div>
         </div>
     </footer>
