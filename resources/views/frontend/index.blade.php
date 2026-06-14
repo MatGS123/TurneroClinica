@@ -24,7 +24,7 @@
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
                 <a class="navbar-brand" href="#">
-                    <i class="bi bi-calendar-check"></i> AppointEase
+                    <i class="bi bi-lungs"></i> Clínica PulmoLab
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
@@ -265,7 +265,7 @@
     <footer>
         <div class="container pb-2">
             <div class="row text-center">
-            <span>Designed & Developed by <a target="_blank" href="https://www.vfixtechnology.com">VFIX TECHNOLOGY</a></span>
+            <span><span>© {{ date('Y') }} Clínica PulmoLab. Todos los derechos reservados. Desarrollado por <a href="https://vfixtechnology.com" target="_blank" rel="noopener" style="color:#3490dc;font-weight:bold;">VFIX Technology</a>.</span></span>
             </div>
         </div>
     </footer>
@@ -313,7 +313,7 @@
             <div class="col">
                 <div class="card border h-100 category-card text-center rounded p-2" data-category="${category.id}">
                     <div class="card-body">
-                         ${category.image ? `<img class="img-fluid w-25 mb-2" src="uploads/images/category/${category.image}">` : ""}
+                         ${category.image ? `<img class="img-fluid w-57 mb-2 rounded" src="uploads/images/category/${category.image}">` : ""}
                         <h5 class="card-title">${category.title}</h5>
                         <p class="card-text">${category.body}</p>
                     </div>
@@ -395,7 +395,6 @@
 
                 const serviceId = $(this).data("service");
                 const serviceTitle = $(this).find('.card-title').text();
-                // const servicePrice = $(this).find('.fw-bold').text().replace('$', '');
                 const servicePrice = $(this).find('.fw-bold').text();
                 const serviceDuration = $(this).find('.card-text:contains("Duration:")').text().replace(
                     'Duration: ', '');

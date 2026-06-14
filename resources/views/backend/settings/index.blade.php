@@ -628,7 +628,7 @@
     <script>
     $(document).ready(function () {
         const csrfToken = '{{ csrf_token() }}';
-        const baseUrl = '/obras-sociales';
+        const baseUrl = "{{ url('obras-sociales') }}";
 
         $('a[href="#obras-sociales"]').on('shown.bs.tab', function () {
             cargarObras();
