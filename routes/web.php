@@ -12,6 +12,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EstudioController;
 
 use Illuminate\Http\Request;
 
@@ -30,6 +31,12 @@ Route::prefix('obras-sociales')->name('obras-sociales.')->middleware(['auth'])->
     Route::put('/{obraSocial}', [App\Http\Controllers\ObraSocialController::class, 'update'])->name('update');
     Route::delete('/{obraSocial}', [App\Http\Controllers\ObraSocialController::class, 'destroy'])->name('destroy');
 });
+
+Route::prefix('estudios')->name('estudios.')->group(function () {
+        Route::get('/', [EstudioController::class, 'index'])->name('index');
+        Route::post('/', [EstudioController::class, 'store'])->name('store');
+        Route::get('/{estudio}/descargar', [EstudioController::class, 'descargar'])->name('descargar');
+    });
 
 
     //user

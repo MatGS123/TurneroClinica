@@ -25,4 +25,8 @@ class Appointment extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function estudios()
+    {
+        return $this->hasMany(Estudio::class, 'appointment_id');
+    }
 }

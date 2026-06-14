@@ -402,6 +402,16 @@ return [
             ],
         ],
         [
+            'text'  => 'Estudios Médicos',
+            'route' => 'estudios.index',
+            'icon'  => 'fas fa-fw fa-file-medical',
+        ],
+        /*[
+            'text'  => 'Obras Sociales',
+            'route' => 'obras-sociales.index',
+            'icon'  => 'fas fa-fw fa-hospital',
+        ],*/
+        [
             'text' => 'Perfil',
             'route' => 'profile',
             'icon' => 'fas fa-fw fa-user',
