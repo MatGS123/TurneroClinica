@@ -406,11 +406,12 @@ return [
             'route' => 'estudios.index',
             'icon'  => 'fas fa-fw fa-file-medical',
         ],
-        /*[
-            'text'  => 'Obras Sociales',
-            'route' => 'obras-sociales.index',
-            'icon'  => 'fas fa-fw fa-hospital',
-        ],*/
+
+        [
+        'text' => 'Obras Sociales',
+        'url'  => 'obras-sociales',
+        'icon' => 'fas fa-fw fa-hospital',
+        ],
         [
             'text' => 'Perfil',
             'route' => 'profile',

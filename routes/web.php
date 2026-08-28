@@ -13,6 +13,7 @@ use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EstudioController;
+use App\Http\Controllers\ObraSocialController;
 
 use Illuminate\Http\Request;
 
@@ -25,11 +26,16 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::prefix('obras-sociales')->name('obras-sociales.')->middleware(['auth'])->group(function () {
-    Route::get('/', [App\Http\Controllers\ObraSocialController::class, 'index'])->name('index');
-    Route::post('/', [App\Http\Controllers\ObraSocialController::class, 'store'])->name('store');
-    Route::put('/{obraSocial}', [App\Http\Controllers\ObraSocialController::class, 'update'])->name('update');
-    Route::delete('/{obraSocial}', [App\Http\Controllers\ObraSocialController::class, 'destroy'])->name('destroy');
+Route::prefix('obras-sociales')->name('obras-sociales.')->group(function () {
+    Route::get('/',                                    [ObraSocialController::class, 'index'])->name('index');
+    Route::get('/create',                              [ObraSocialController::class, 'create'])->name('create');
+    Route::post('/',                                   [ObraSocialController::class, 'store'])->name('store');
+    Route::get('/{obraSocial}/edit',                   [ObraSocialController::class, 'edit'])->name('edit');
+    Route::put('/{obraSocial}',                        [ObraSocialController::class, 'update'])->name('update');
+    Route::delete('/{obraSocial}',                     [ObraSocialController::class, 'destroy'])->name('destroy');
+    Route::post('/{obraSocial}/coseguros',             [ObraSocialController::class, 'storeCoseguro'])->name('coseguros.store');
+    Route::delete('/{obraSocial}/coseguros/{coseguro}',[ObraSocialController::class, 'destroyCoseguro'])->name('coseguros.destroy');
+    Route::get('/listar',                              [ObraSocialController::class, 'listar'])->name('listar');
 });
 
 Route::prefix('estudios')->name('estudios.')->group(function () {

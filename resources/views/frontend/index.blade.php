@@ -395,7 +395,6 @@
 
                 const serviceId = $(this).data("service");
                 const serviceTitle = $(this).find('.card-title').text();
-                // const servicePrice = $(this).find('.fw-bold').text().replace('$', '');
                 const servicePrice = $(this).find('.fw-bold').text();
                 const serviceDuration = $(this).find('.card-text:contains("Duration:")').text().replace(
                     'Duration: ', '');
