@@ -183,7 +183,7 @@
                             <ul class="list-group list-group-unbordered mb-3">
 
                                 <li class="list-group-item">
-                                    <b>Última conexión</b> <a
+                                    <b> conexión</b> <a
                                         class="float-right">{{ $user->lastSuccessfulLoginAt() ? $user->lastSuccessfulLoginAt()->diffForHumans() : 'NA' }}</a>
                                 </li>
 

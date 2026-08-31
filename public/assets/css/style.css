@@ -249,9 +249,9 @@ body {
 @media(min-width:720px)
 {
     .booking-content {
-    padding: 30px;
-    min-height: 400px;
-}
+        padding: 30px;
+        min-height: 400px;
+    }
 
 }
 /* Botón Avanzar y otros botones primary con el color del sistema */

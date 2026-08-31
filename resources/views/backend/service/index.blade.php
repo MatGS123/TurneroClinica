@@ -53,25 +53,25 @@
                                 <table id="myTable" class="table table-striped projects ">
                                     <thead>
                                         <tr>
-                                            <th style="width: 1%">
+                                            <th style="width: 1%" data-priority="1">
                                                 #
                                             </th>
-                                            <th style="width: 20%">
+                                            <th style="width: 20%" data-priority="2">
                                                 Título
                                             </th>
-                                            <th style="width: 10%">
+                                            <th style="width: 10%" data-priority="100">
                                                 Imágen
                                             </th>
-                                            <th style="width: 10%">
+                                            <th style="width: 10%" data-priority="4">
                                                 Categoría
                                             </th>
                                             {{-- <th style="width: 10%">
                                                 Featured
                                             </th> --}}
-                                            <th style="width: 10%" class="text-center">
+                                            <th style="width: 10%" class="text-center" data-priority="3">
                                                 Estado
                                             </th>
-                                            <th style="width: 8%">
+                                            <th style="width: 8%" data-priority="1">
                                                 Acción
                                             </th>
                                         </tr>
@@ -161,6 +161,7 @@
 @stop
 
 @section('css')
+    <link rel="stylesheet" href="{{ asset('assets/css/admin-responsive.css') }}">
 
 @stop
 
