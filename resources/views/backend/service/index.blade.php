@@ -50,28 +50,29 @@
                         <div class="card py-2 px-2">
 
                             <div class="card-body p-0">
+                                <div class="table-responsive">
                                 <table id="myTable" class="table table-striped projects ">
                                     <thead>
                                         <tr>
-                                            <th style="width: 1%" data-priority="1">
+                                            <th style="width: 1%">
                                                 #
                                             </th>
-                                            <th style="width: 20%" data-priority="2">
+                                            <th style="width: 20%">
                                                 Título
                                             </th>
-                                            <th style="width: 10%" data-priority="100">
+                                            <th style="width: 10%">
                                                 Imágen
                                             </th>
-                                            <th style="width: 10%" data-priority="4">
+                                            <th style="width: 10%">
                                                 Categoría
                                             </th>
                                             {{-- <th style="width: 10%">
                                                 Featured
                                             </th> --}}
-                                            <th style="width: 10%" class="text-center" data-priority="3">
+                                            <th style="width: 10%" class="text-center">
                                                 Estado
                                             </th>
-                                            <th style="width: 8%" data-priority="1">
+                                            <th style="width: 8%">
                                                 Acción
                                             </th>
                                         </tr>
@@ -146,6 +147,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                </div>
 
                             </div>
                             <!-- /.card-body -->
@@ -160,10 +162,6 @@
     </div>
 @stop
 
-@section('css')
-    <link rel="stylesheet" href="{{ asset('assets/css/admin-responsive.css') }}">
-
-@stop
 
 @section('js')
 
@@ -177,7 +175,6 @@
     <script>
         $(document).ready(function() {
             $('#myTable').DataTable({
-                responsive: true
             });
 
         });

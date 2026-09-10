@@ -79,20 +79,21 @@
                     <div class="col-md-12">
                         <div class="card py-2 px-2">
                             <div class="card-body p-0">
+                                <div class="table-responsive">
                                 <table id="myTable" class="table table-striped projects">
                                     <thead>
                                         <tr>
-                                            <th style="width: 1%" data-priority="1">#</th>
-                                            <th style="width: 15%" data-priority="1">Usuario</th>
-                                            <th style="width: 10%" data-priority="100">Obra</th>
-                                            <th style="width: 15%" data-priority="100">Email</th>
-                                            <th style="width: 10%" data-priority="100">Teléfono</th>
-                                            <th style="width: 10%" data-priority="100">Personal</th>
-                                            <th style="width: 10%" data-priority="3">Servicio</th>
-                                            <th style="width: 10%" data-priority="2">Fecha</th>
-                                            <th style="width: 10%" data-priority="2">Tiempo</th>
-                                            <th style="width: 15%" class="text-center" data-priority="2">Estado</th>
-                                            <th style="width: 18%" data-priority="1">Acción</th>
+                                            <th style="width: 1%">#</th>
+                                            <th style="width: 15%">Usuario</th>
+                                            <th style="width: 10%">Obra</th>
+                                            <th style="width: 15%">Email</th>
+                                            <th style="width: 10%">Teléfono</th>
+                                            <th style="width: 10%">Personal</th>
+                                            <th style="width: 10%">Servicio</th>
+                                            <th style="width: 10%">Fecha</th>
+                                            <th style="width: 10%">Tiempo</th>
+                                            <th style="width: 15%" class="text-center">Estado</th>
+                                            <th style="width: 18%">Acción</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -184,6 +185,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -193,9 +195,6 @@
     </div>
 @stop
 
-@section('css')
-    <link rel="stylesheet" href="{{ asset('assets/css/admin-responsive.css') }}">
-@stop
 
 @section('js')
     {{-- hide notification --}}
@@ -208,8 +207,6 @@
     <script>
         $(document).ready(function() {
             $('#myTable').DataTable({
-                responsive: true,
-                autoWidth: false,
                 language: {
                     "lengthMenu": "Mostrar _MENU_ registros",
                     "zeroRecords": "No se encontraron resultados",

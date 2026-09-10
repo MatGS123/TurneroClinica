@@ -25,16 +25,17 @@
 
 <div class="card">
 <div class="card-body p-0">
+<div class="table-responsive">
 <table id="tablaObras" class="table table-striped">
 <thead>
 <tr>
-<th data-priority="1">#</th>
-<th data-priority="1">Nombre</th>
-<th data-priority="100">Plan</th>
-<th data-priority="100">Prestadora</th>
-<th data-priority="2">Estado</th>
-<th data-priority="3">Coseguros</th>
-<th data-priority="1">Acciones</th>
+<th>#</th>
+<th>Nombre</th>
+<th>Plan</th>
+<th>Prestadora</th>
+<th>Estado</th>
+<th>Coseguros</th>
+<th>Acciones</th>
 </tr>
 </thead>
 <tbody>
@@ -70,18 +71,14 @@ onsubmit="return confirm('¿Eliminar esta obra social?')">
 </table>
 </div>
 </div>
+</div>
 @stop
 
-@section('css')
-    <link rel="stylesheet" href="{{ asset('assets/css/admin-responsive.css') }}">
-@stop
 
 @section('js')
 <script>
 $(document).ready(function() {
     $('#tablaObras').DataTable({
-        responsive: true,
-        autoWidth: false,
         language: {
             lengthMenu: "Mostrar _MENU_ registros",
             zeroRecords: "No se encontraron resultados",
